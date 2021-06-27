@@ -1,0 +1,14 @@
+form {
+  display: flex;
+  flex-direction: column;
+  margin: 25px;
+}
+
+form > input {
+  padding: 10px;
+  margin: 10px 0px;
+}
+
+.creation-id {
+  margin: 25px;
+}
