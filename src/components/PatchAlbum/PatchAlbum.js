@@ -1,57 +1,57 @@
 import { useState, useRef } from "react";
-import { putAlbum } from "../../services/AlbumsService";
-import "./PutAlbum.css";
+import { patchAlbum } from "../../services/AlbumsService";
+import "./PatchAlbum.css";
 
-const PutAlbum = () => {
+const PatchAlbum = () => {
   const formRef = useRef(null);
-  const [putData, setPutData] = useState();
+  const [patchData, setPatchData] = useState();
   const [loading, setLoading] = useState(false);
 
   const sendForm = (event) => {
     event.preventDefault();
     let formData = new FormData(formRef.current);
+    console.log(formData.get("title"));
     const putData = {
       id: formData.get("id"),
-      userId: formData.get("userId"),
-      title: formData.get("title"),
+      ...(formData.get("userId") && { userId: formData.get("userId") }),
+      ...(formData.get("title") && { title: formData.get("title") }),
     };
     setLoading(true);
-    putAlbum(putData).then((response) => {
-      setPutData(response);
-      console.log(response);
+    patchAlbum(putData).then((response) => {
+      setPatchData(response);
       setLoading(false);
     });
   };
 
   return (
     <div className="wrapper-create">
-      <h1>Put Album</h1>
+      <h1>Patch Album</h1>
       {loading && <div className="loading">Cargando...</div>}
       {!loading && (
         <div className="create-album">
           <form id="formPost" ref={formRef} onSubmit={sendForm}>
-            <input name="id" placeholder="Id" />
+            <input name="id" placeholder="Id" required />
             <input name="userId" placeholder="userId" />
             <input name="title" placeholder="Title" />
-            <button type="submit">Put Album</button>
+            <button type="submit">Patch Album</button>
           </form>
         </div>
       )}
-      {!loading && putData && (
+      {!loading && patchData && (
         <div>
           <h2>PUT</h2>
           <div className="put-result">
             <div>
               <strong>Id creada: </strong>
-              {putData.id}
+              {patchData.id}
             </div>
             <div>
               <strong>UserId: </strong>
-              {putData.userId}
+              {patchData.userId}
             </div>
             <div>
               <strong>Título: </strong>
-              {putData.title}
+              {patchData.title}
             </div>
           </div>
         </div>
@@ -60,4 +60,4 @@ const PutAlbum = () => {
   );
 };
 
-export default PutAlbum;
+export default PatchAlbum;

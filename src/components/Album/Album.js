@@ -1,27 +1,51 @@
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getAlbum } from "../../services/AlbumsService";
 import "./Album.css";
 
 const Album = () => {
   let { id } = useParams();
+  const history = useHistory();
   const [album, setAlbum] = useState();
   const [loading, setLoading] = useState(false);
-
+  const [currentId, setCurrentId] = useState(id);
   useEffect(() => {
     setLoading(true);
-    getAlbum(id).then((data) => {
+    getAlbum(currentId).then((data) => {
       setAlbum(data);
       setLoading(false);
     });
-  }, [id]);
+  }, [currentId]);
 
   return (
     <div className="wrapper-album">
       <h1>Album</h1>
       {loading && <div>Cargando...</div>}
       {!album && !loading && <div>No hay elementos que mostrar</div>}
-      {album && !loading && templateAlbum(album)}
+      {album && !loading && (
+        <div>
+          {templateAlbum(album)}
+          <div className="buttons-actions">
+            <button
+              onClick={() => {
+                setCurrentId(Number(currentId) - 1);
+                history.push(`/album/single/${Number(currentId) - 1}`);
+              }}
+              disabled={currentId <= 1}
+            >
+              -
+            </button>
+            <button
+              onClick={() => {
+                setCurrentId(Number(currentId) + 1);
+                history.push(`/album/single/${Number(currentId) + 1}`);
+              }}
+            >
+              +
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

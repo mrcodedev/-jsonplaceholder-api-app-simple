@@ -7,16 +7,18 @@ const Nav = () => {
     <div>
       {location.pathname === "/" && (
         <nav>
-          <Link to="/albums">Albums</Link>
-          <Link to="/album/1">Album</Link>
-          <Link to="/create-album/">Create Álbum</Link>
-          <Link to="/put-album/">Put Álbum</Link>
+          <Link to="/albums/">All Albums</Link>
+          <Link to="/album/single/1">Single Album</Link>
+          <Link to="/album/create">Create Album</Link>
+          <Link to="/album/put">Put Album</Link>
+          <Link to="/album/patch">Patch Album</Link>
+          <Link to="/album/delete">Delete Album</Link>
         </nav>
       )}
 
       {location.pathname !== "/" && (
         <div>
-          <Link to="/">Volver atrás</Link>
+          <Link to="/">Go back</Link>
         </div>
       )}
     </div>

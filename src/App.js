@@ -4,6 +4,8 @@ import Album from "./components/Album/Album";
 import Albums from "./components/Albums/Albums";
 import CreateAlbum from "./components/CreateAlbum/CreateAlbum";
 import PutAlbum from "./components/PutAlbum/PutAlbum";
+import PatchAlbum from "./components/PatchAlbum/PatchAlbum";
+import DeleteAlbum from "./components/DeleteAlbum/DeleteAlbum";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -16,17 +18,23 @@ function App() {
         </header>
         <Nav />
         <Switch>
-          <Route path="/album/:id">
+          <Route path="/album/single/:id">
             <Album />
           </Route>
           <Route path="/albums/">
             <Albums />
           </Route>
-          <Route path="/create-album/">
+          <Route path="/album/create">
             <CreateAlbum />
           </Route>
-          <Route path="/put-album/:id">
+          <Route path="/album/put">
             <PutAlbum />
+          </Route>
+          <Route path="/album/patch">
+            <PatchAlbum />
+          </Route>
+          <Route path="/album/delete">
+            <DeleteAlbum />
           </Route>
         </Switch>
       </div>

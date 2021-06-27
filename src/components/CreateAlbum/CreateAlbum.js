@@ -1,6 +1,6 @@
-import "./CreateAlbum.css";
 import { useRef, useState } from "react";
 import { postAlbum } from "../../services/AlbumsService";
+import "./CreateAlbum.css";
 
 const CreateAlbum = () => {
   const formRef = useRef(null);
@@ -10,22 +10,23 @@ const CreateAlbum = () => {
   const sendForm = (event) => {
     event.preventDefault();
     let formData = new FormData(formRef.current);
-    const dataPost = {
+    const postData = {
       userId: formData.get("userId"),
       title: formData.get("title"),
     };
     setLoading(true);
-    postAlbum(dataPost).then((response) => {
+    postAlbum(postData).then((response) => {
       setPostData(response);
       setLoading(false);
     });
   };
 
   return (
-    <div>
+    <div className="wrapper-create">
+      <h1>Create Album</h1>
+      {loading && <div className="loading">Cargando...</div>}
       {!loading && (
         <div className="create-album">
-          <h1>Create Album</h1>
           <form id="formPost" ref={formRef} onSubmit={sendForm}>
             <input name="userId" placeholder="UserId" />
             <input name="title" placeholder="Title" />
@@ -33,8 +34,8 @@ const CreateAlbum = () => {
           </form>
         </div>
       )}
-      {postData && (
-        <div className="creation-id">
+      {!loading && postData && (
+        <div className="post-result">
           <div>
             <strong>Id creada: </strong>
             {postData.id}
